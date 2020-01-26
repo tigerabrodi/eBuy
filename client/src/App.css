@@ -1,0 +1,11 @@
+body {
+    background-color: rgba(26, 8, 124, 0.719);
+}
+
+#showcase {
+    position: relative;
+    background: 
+    linear-gradient(to top right, rgba(8, 78, 57, 0.555), rgba(13, 25, 131, 0.671), rgba(98, 4, 4, 0.712)), 
+    url("https://wallpaperaccess.com/full/656670.jpg");
+    min-height: 1000px;
+}
