@@ -9,7 +9,8 @@ const app = express();
 const PORT = process.env.PORT || 9045;
 
 // Importing Routes
-const authRoutes = require("./routes/auth")
+const authRoutes = require("./routes/auth");
+const productRoutes = require("./routes/products");
 
 // Connect Database
 connectDB();
@@ -20,6 +21,7 @@ const fileStorage = multer.diskStorage({
     cb(null, 'images');
   },
   filename: (req, file, cb) => {
+    // I used a regex to trim the name from spaces
     cb(null, uuidv4() + "_" + file.originalname.replace(/\s/g, ''));
   }
 });
@@ -56,6 +58,8 @@ if (process.env.NODE_ENV === "development") {
 
 // Define Routes
 app.use('/auth', authRoutes);
+app.use('/products', productRoutes);
+
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

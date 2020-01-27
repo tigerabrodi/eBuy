@@ -51,11 +51,13 @@ exports.signup = async (req, res, next) => {
           if (err) throw err;
           res.status(201).json({ token });
           sendWelcomeEmail(user.email, user.name);
+          next();
         }
       );
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
+      next(err);
     }
 }
 
@@ -102,11 +104,13 @@ exports.signin = async (req, res, next) => {
         (err, token) => {
           if (err) throw err;
           res.json({ token });
+          next();
         }
       );
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
+      next(err);
     }
 }
 
@@ -118,9 +122,11 @@ exports.getUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
         res.json(user);
+        next();
     } catch (err) {
         console.error(err.message);
         res.status(500).send("Server Error");
+        next(err);
     }
 }
 

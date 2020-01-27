@@ -10,6 +10,9 @@ import Landing from './components/layout/Landing';
 import Alert from './components/layout/Alert';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import PrivateRoute from './components/routing/PrivateRoute';
+import Dashboard from './components/dashboard/Dashboard';
+import CreateProduct from './components/product-forms/CreateProduct';
 
 
 
@@ -33,6 +36,8 @@ const App = () => {
     <Switch>
     <Route exact path="/register" component={Register} />
     <Route exact path="/login" component={Login} />
+    <PrivateRoute exact path="/dashboard" component={Dashboard} />
+    <PrivateRoute exact path="/add-product" component={CreateProduct} />
     </Switch>
     </Fragment>
     </Router>
