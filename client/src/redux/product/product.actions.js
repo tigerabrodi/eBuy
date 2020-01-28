@@ -3,7 +3,7 @@ import {setAlert} from "../alert/alert.actions"
 import axios from "axios"
 
 
-
+// Add A Product
 export const addProduct = (productData, history) => async dispatch => {
     const formData = new FormData();
     formData.append("name", productData.name);
@@ -27,5 +27,38 @@ export const addProduct = (productData, history) => async dispatch => {
         type: ProductActionTypes.PRODUCT_ERROR,
         payload: {msg: err.response.statusText, status: err.response.status}
         })
+    }
+}
+
+// Get all products
+export const getAllProducts = (page) => async dispatch => {
+    try {
+        const res = await axios.get(`/products?page=${page}`);
+        dispatch({
+            type: ProductActionTypes.GET_PRODUCTS,
+            payload: {products: res.data.products, totalItems: res.data.totalItems}
+        })
+    } catch (err) {
+        dispatch({
+            type: ProductActionTypes.PRODUCT_ERROR,
+            payload: err
+            })
+    }
+}
+
+// Get A Single users products
+export const getUserProducts = id => async dispatch => {
+    try {
+        const res = await axios.get(`/products/${id}`);
+
+        dispatch({
+            type: ProductActionTypes.GET_PRODUCTS,
+            payload: res.data
+        })
+    } catch (err) {
+        dispatch({
+            type: ProductActionTypes.PRODUCT_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+            })
     }
 }

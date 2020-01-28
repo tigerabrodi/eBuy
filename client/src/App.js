@@ -13,6 +13,7 @@ import Login from './components/auth/Login';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProduct from './components/product-forms/CreateProduct';
+import Products from './components/products/Products';
 
 
 
@@ -38,6 +39,7 @@ const App = () => {
     <Route exact path="/login" component={Login} />
     <PrivateRoute exact path="/dashboard" component={Dashboard} />
     <PrivateRoute exact path="/add-product" component={CreateProduct} />
+    <PrivateRoute exact path="/products" component={Products} />
     </Switch>
     </Fragment>
     </Router>

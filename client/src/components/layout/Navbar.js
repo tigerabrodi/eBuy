@@ -28,9 +28,6 @@ const Navbar = ({auth: {isAuthenticated, loading}, logout}) => {
     const guestLinks = (
         <ul className="navbar-nav ml-auto text-info">
         <li className="nav-item">
-            <Link className="nav-link text-info font-weight-bold text-monospace" to="/products">Products</Link>
-        </li>
-        <li className="nav-item">
             <Link className="nav-link text-info font-weight-bold text-monospace" to="/register">Register</Link>
         </li>
         <li className="nav-item">

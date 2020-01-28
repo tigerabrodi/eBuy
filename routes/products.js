@@ -15,4 +15,12 @@ router.post("/", [
     ]
 ], productController.createProduct);
 
+
+// Get all products
+router.get("/", auth, productController.getAllProducts);
+
+
+// Get a single user's products
+router.get("/:userId", auth, productController.getUserProducts)
+
 module.exports = router;

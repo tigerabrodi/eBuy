@@ -11,6 +11,13 @@ const initialState = {
 const productReducer = (state = initialState, action) => {
     const {payload, type} = action;
     switch(type) {
+        case ProductActionTypes.GET_PRODUCTS:
+            return {
+                ...state,
+                products: payload.products,
+                totalProducts: payload.totalItems,
+                loading: false
+            }
         case ProductActionTypes.ADD_PRODUCT:
             return {
                 ...state,
