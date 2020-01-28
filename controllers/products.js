@@ -1,10 +1,9 @@
 const {validationResult} = require("express-validator");
 const User = require("../models/User");
 const Product = require("../models/Product");
-const auth = require("../middleware/auth");
 
 
-// @route    POST /products/
+// @route    POST /products
 // @desc     Add Product
 // @access   Private
 exports.createProduct = async (req, res, next) => {
@@ -14,25 +13,26 @@ exports.createProduct = async (req, res, next) => {
     }
 
     try {
-      const {title, description, price} = req.body;
+      console.log(req.body)
+      // const {name, description, price} = req.body;
 
-      if (!req.file) {
-        return res.status(400).json({msg: "Please upload an Image!"})
-      }
+      // if (!req.file) {
+      //   return res.status(400).json({msg: "Please upload an Image!"})
+      // }
 
-      const image = "/" + req.file.path.replace("\\" ,"/");
+      // const image = "/" + req.file.path.replace("\\" ,"/");
 
-      const newProduct = new Product({
-        user: req.user.id,
-        title,
-        description,
-        price,
-        image
-      });
+      // const newProduct = new Product({
+      //   user: req.user.id,
+      //   title,
+      //   description,
+      //   price,
+      //   image
+      // });
 
-      const product = await newProduct.save();
-      res.status(201).json(product);
-      console.log(product);
+      // const product = await newProduct.save();
+      // res.status(201).json(product);
+      // console.log(product);
       next();
     } catch (err) {
       console.error(err.message);

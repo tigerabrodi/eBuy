@@ -5,22 +5,17 @@ import axios from "axios"
 
 
 export const addProduct = (productData, history) => async dispatch => {
-    const config = {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    };
     const formData = new FormData();
-    formData.append("title", productData.title)
-    formData.append("description", productData.description)
-    formData.append("price", productData.price)
-    formData.append("image", productData.image)
+    formData.append("name", productData.name);
+    formData.append("description", productData.description);
+    formData.append("price", productData.price);
+    formData.append("image", productData.image);
     try {
-        const res = axios.post("/products/", formData, config);
+        const res = await axios.post("/products", formData);
         dispatch({
             type: ProductActionTypes.ADD_PRODUCT,
             payload: res.data
-        })
+        });
         history.push("/dashboard");
         dispatch(setAlert("Product created successfully", "success"))
     } catch (err) {

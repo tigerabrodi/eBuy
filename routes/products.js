@@ -9,9 +9,8 @@ const router = express.Router();
 router.post("/", [
     auth,
     [
-        check("title", "Title is required").notEmpty(),
+        check("name", "Name is required").notEmpty(),
         check("description", "Description is required").notEmpty(),
-        check("image", "Image is required").notEmpty(),
         check("price", "Price is required").isNumeric()
     ]
 ], productController.createProduct);

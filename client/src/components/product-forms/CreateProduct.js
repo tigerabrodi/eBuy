@@ -5,14 +5,9 @@ import {addProduct} from '../../redux/product/product.actions';
 
 const CreateProduct = ({history, addProduct}) => {
     const [formData,
-        setFormData] = useState({name: "", description: "", price: null, image: ""});
+        setFormData] = useState({name: "", description: "", price: 10, image: ""});
     const [showImage, setShowImage] = useState(false);
-    const [imageName, setImageName] = useState("")
-
-    const onSubmit = e => {
-        e.preventDefault();
-        addProduct(formData, history);
-    }
+    const [imageName, setImageName] = useState("");
 
     const onChangeImage = e => {
         setFormData({...formData, image: e.target.files[0]});
@@ -24,6 +19,11 @@ const CreateProduct = ({history, addProduct}) => {
         ...formData,
         [e.target.name]: e.target.value
     });
+
+        const onSubmit = e => {
+        e.preventDefault();
+        addProduct(formData, history);
+    }
 
     const {name, description, price} = formData;
     return (
