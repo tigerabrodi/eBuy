@@ -31,7 +31,7 @@ export const addProduct = (productData, history) => async dispatch => {
 }
 
 // Get all products
-export const getAllProducts = (page) => async dispatch => {
+export const getAllProducts = page => async dispatch => {
     try {
         const res = await axios.get(`/products?page=${page}`);
         dispatch({

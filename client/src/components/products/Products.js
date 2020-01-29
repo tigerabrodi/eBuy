@@ -4,26 +4,34 @@ import { getAllProducts } from '../../redux/product/product.actions';
 import Spinner from '../layout/Spinner';
 import Pagination from './Pagination';
 import ProductItem from './ProductItem';
+import ProductSearch from './ProductSearch';
 
 const Products = ({getAllProducts, product: {products, totalProducts, loading}}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(6);
+    const [text, setText] = useState("");
+
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
     useEffect(() => {
         getAllProducts(currentPage);
     }, [products, currentPage]);
 
+    const onSubmit = e => {
+        e.preventDefault();
+        
+    }
     
     return loading ? <Spinner /> : (
         <Fragment>
         <div className="container">
         <div className="row">
         <div className="col text-center">
-        <h1 className="text-warning">Products</h1>
-        <p className="lead text-danger">
+        <h1 className="text-warning text-monospace">Products</h1>
+        <p className="lead text-success font-weight-bold">
          Find Your Item Today
         </p>
+        <ProductSearch text={text} onChange={e => setText(e.target.value)} />
         </div>
         </div>
         </div>
