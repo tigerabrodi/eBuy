@@ -15,7 +15,7 @@ const Landing = ({isAuthenticated}) => {
                 <h1 className="display-2 mt-5 pt-5">
                   Start To Make Money Today!
                 </h1>
-                <p className="lead">Buy, Sell & Profit <i class="fas fa-search-dollar"/> </p>
+                <p className="lead">Buy, Sell & Profit <i className="fas fa-search-dollar"/> </p>
                 <Link to="/register" className="btn mr-3 btn-outline-info btn-md text-white">
                  Sign Up
                 </Link>

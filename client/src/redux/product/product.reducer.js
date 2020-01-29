@@ -24,6 +24,12 @@ const productReducer = (state = initialState, action) => {
                 products: [payload, ...state.products],
                 loading: false
             }
+            case ProductActionTypes.DELETE_PRODUCT:
+                return {
+                    ...state,
+                    products: state.products.filter(product => product._id !== payload),
+                    loading: false
+                }
             case ProductActionTypes.PRODUCT_ERROR: 
             return {
                 ...state,

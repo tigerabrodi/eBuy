@@ -29,7 +29,6 @@ exports.createProduct = async (req, res, next) => {
         price,
         image
       });
-
       const product = await newProduct.save();
       res.status(201).json(product);
       next();
@@ -77,11 +76,45 @@ exports.getUserProducts = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({msg: "No User with this ID was found"})
     }
-
-    const products = await Product.find({user: user._id})
-
-    res.status(200).json(products);
+    const currentPage = req.query.page || 1;
+    const perPage = 6;
+    let totalItems;
+    const totalProducts = await Product.find({user: user._id}).countDocuments();
+    totalItems = totalProducts;
+    const products = await Product.find({user: user._id}).sort({date: -1})
+    .populate("user")
+    .skip((currentPage - 1) * perPage)
+    .limit(perPage);
+    res.status(200).json({
+      msg: "Fetched products successfully",
+      products: products,
+      totalItems: totalItems
+    });
     next();
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+    next(err);
+  }
+}
+
+
+// @route    DELETE /products/:productId
+// @desc     Delete a product
+// @access   Private
+exports.deleteProduct = async (req, res, next) => {
+  try {
+      const product = await Product.findById(req.params.productId);
+      if (!product) {
+        return res.status(404).json({msg: "Product was not found"});
+      }
+      if (product.user.toString() !== req.user.id) {
+        return res.status(401).json({msg: "You are not authorized"});
+      }
+
+      await product.remove();
+      res.status(200).json({msg: "Product Deleted"});
+      next();
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

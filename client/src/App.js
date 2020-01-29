@@ -17,11 +17,9 @@ import Products from './components/products/Products';
 
 
 
-
 if (localStorage.token) {
     setAuthToken(localStorage.token)
 }
-
 
 const App = () => {
   useEffect(() => {

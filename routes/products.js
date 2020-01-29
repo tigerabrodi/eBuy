@@ -19,8 +19,10 @@ router.post("/", [
 // Get all products
 router.get("/", auth, productController.getAllProducts);
 
-
 // Get a single user's products
-router.get("/:userId", auth, productController.getUserProducts)
+router.get("/:userId", auth, productController.getUserProducts);
+
+// Delete Product
+router.delete("/:productId", auth, productController.deleteProduct)
 
 module.exports = router;

@@ -46,11 +46,27 @@ export const getAllProducts = page => async dispatch => {
     }
 }
 
-// Get A Single users products
-export const getUserProducts = id => async dispatch => {
+// Delete a product
+export const deleteSingleProduct = id => async dispatch => {
     try {
-        const res = await axios.get(`/products/${id}`);
+        await axios.delete(`/products/${id}`);
+        dispatch({
+            type: ProductActionTypes.DELETE_PRODUCT,
+            payload: id
+        });
+        dispatch(setAlert("Product deleted successfully", "success"))
+    } catch (err) {
+        dispatch({
+            type: ProductActionTypes.PRODUCT_ERROR,
+            payload: err
+            })
+    }
+}
 
+// Get A Single users products
+export const getUserProducts = (id, page) => async dispatch => {
+    try {
+        const res = await axios.get(`/products/${id}?page=${page}`);
         dispatch({
             type: ProductActionTypes.GET_PRODUCTS,
             payload: res.data

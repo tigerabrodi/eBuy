@@ -29,32 +29,32 @@ const Login = ({login, isAuthenticated}) => {
         <Fragment>
             <div className="container">
                 <div className="row">
-                    <div class="col-lg-12 text-center">
-                        <div class="card bg-warning text-center card-form">
-                            <div class="card-body">
+                    <div className="col-lg-12 text-center">
+                        <div className="card bg-warning text-center card-form">
+                            <div className="card-body">
                                 <h3 className="text-danger font-weight-bold">Sign Into Your Account</h3>
                                 <form onSubmit={onSubmit}>
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <input
                                             onChange={e => onChange(e)}
                                             type="email"
                                             name='email'
                                             value={email}
-                                            class="form-control form-control-lg"
+                                            className="form-control form-control-lg"
                                             placeholder="Email"
                                             required/>
                                     </div>
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <input
                                         onChange={e => onChange(e)}
                                             type="password"
                                             name='password'
                                             value={password}
                                             minLength='6'
-                                            class="form-control form-control-lg"
+                                            className="form-control form-control-lg"
                                             placeholder="Password"/>
                                     </div>
-                                    <input type="submit" value="Login" class="btn btn-primary btn-block"/>
+                                    <input type="submit" value="Login" className="btn btn-primary btn-block"/>
                                     <Link to="/register">
                                         <p className="text-dark">Don't Have an account? </p>
                                     </Link>

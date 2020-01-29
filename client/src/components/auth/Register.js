@@ -39,43 +39,43 @@ const Register = ({setAlert, register, isAuthenticated}) => {
                                 <h3 className="text-primary text-monospace">Sign Up Today</h3>
                                 <p className="text-success font-weight-bold">Please fill out this form to register</p>
                                 <form onSubmit={onSubmit}>
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <input
                                             onChange={e => onChange(e)}
                                             type="text"
                                             value={name}
                                             name='name'
-                                            class="form-control form-control-lg"
+                                            className="form-control form-control-lg"
                                             placeholder="Name"/>
                                     </div>
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <input
                                         onChange={e => onChange(e)}
                                             type="email"
                                             name='email'
                                             value={email}
-                                            class="form-control form-control-lg"
+                                            className="form-control form-control-lg"
                                             placeholder="Email"/>
                                     </div>
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <input
                                         onChange={e => onChange(e)}
                                             type="password"
                                             name='password'
                                             value={password}
-                                            class="form-control form-control-lg"
+                                            className="form-control form-control-lg"
                                             placeholder="Password"/>
                                     </div>
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <input
                                             value={password2}
                                             onChange={e => onChange(e)}
                                             type="password"
                                             name='password2'
-                                            class="form-control form-control-lg"
+                                            className="form-control form-control-lg"
                                             placeholder="Confirm Password"/>
                                     </div>
-                                    <input type="submit" value="Register" class="btn btn-outline-warning btn-block"/>
+                                    <input type="submit" value="Register" className="btn btn-outline-warning btn-block"/>
                                     <Link to="/login">
                                         <p className="text-info">Already have an account ?</p>
                                     </Link>
