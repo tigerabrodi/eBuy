@@ -14,12 +14,13 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProduct from './components/product-forms/CreateProduct';
 import Products from './components/products/Products';
-
+import EditProduct from './components/product-forms/EditProduct';
 
 
 if (localStorage.token) {
     setAuthToken(localStorage.token)
 }
+
 
 const App = () => {
   useEffect(() => {
@@ -38,6 +39,7 @@ const App = () => {
     <PrivateRoute exact path="/dashboard" component={Dashboard} />
     <PrivateRoute exact path="/add-product" component={CreateProduct} />
     <PrivateRoute exact path="/products" component={Products} />
+    <PrivateRoute exact path="/products/edit/:id" component={EditProduct} />
     </Switch>
     </Fragment>
     </Router>

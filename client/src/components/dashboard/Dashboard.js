@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Pagination from '../products/Pagination';
 import ProductItem from '../products/ProductItem';
 import { getUserProducts } from '../../redux/product/product.actions';
-import {loadUser} from "../../redux/auth/auth.actions";
+import Spinner from '../layout/Spinner';
 
 const Dashboard = ({product: {products, loading, totalProducts}, loadUser, getUserProducts, auth: {user}}) => {
 
@@ -27,6 +27,9 @@ const Dashboard = ({product: {products, loading, totalProducts}, loadUser, getUs
             </div>
         </div>
         <br />
+        {loading ||!products && (
+            <Spinner />
+        )}
         <div className="container">
         <div className="row">
         {products.map(product => (
@@ -50,4 +53,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, {getUserProducts, loadUser})(Dashboard);
+export default connect(mapStateToProps, {getUserProducts})(Dashboard);

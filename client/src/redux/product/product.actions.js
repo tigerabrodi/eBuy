@@ -58,7 +58,7 @@ export const deleteSingleProduct = id => async dispatch => {
     } catch (err) {
         dispatch({
             type: ProductActionTypes.PRODUCT_ERROR,
-            payload: err
+            payload: {msg: err.response.statusText, status: err.response.status}
             })
     }
 }
@@ -76,5 +76,44 @@ export const getUserProducts = (id, page) => async dispatch => {
             type: ProductActionTypes.PRODUCT_ERROR,
             payload: {msg: err.response.statusText, status: err.response.status}
             })
+    }
+}
+
+// Edit a Product
+export const editProduct = (productData, history, id) => async dispatch => {
+    const formData = new FormData();
+    formData.append("name", productData.name);
+    formData.append("description", productData.description);
+    formData.append("price", productData.price);
+    formData.append("image", productData.image);
+    try {
+        const res = await axios.post(`/products/edit/${id}`, formData);
+        dispatch({
+            type: ProductActionTypes.UPDATE_PRODUCT,
+            payload: res.data
+        });
+        dispatch(setAlert("Product updated successfully", "success"))
+        history.push("/dashboard")
+    } catch (err) {
+        dispatch({
+            type: ProductActionTypes.PRODUCT_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+            })
+    }
+}
+
+// Get a single product by ID
+export const getProduct = id => async dispatch => {
+    try {
+        const res = await axios.get(`/products/product/${id}`);
+        dispatch({
+            type: ProductActionTypes.GET_PRODUCT,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: ProductActionTypes.PRODUCT_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+            });
     }
 }

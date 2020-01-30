@@ -98,6 +98,70 @@ exports.getUserProducts = async (req, res, next) => {
   }
 }
 
+// @route    GET /products/product/:productId
+// @desc     Get a single product by its ID
+// @access   Private
+exports.getProduct = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.productId);
+    if (!product) {
+      return res.status(404).json({msg: "Could not find product"});
+    }
+
+    res.status(200).json(product);
+    next();
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+    next(err);
+  }
+}
+
+
+// @route    PUT /products/edit/:productId
+// @desc     Delete a product
+// @access   Private
+exports.editProduct = async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    let product = await Product.findById(req.params.productId);
+    if (!product) {
+      return res.status(404).json({msg: "Product do not exist!"})
+    }
+
+    if (product.user.toString() !== req.user.id) {
+      return res.status(401).json({msg: "User is not authorized"});
+    }
+
+    if (!req.file) {
+      return res.status(400).json({msg: "Please upload an Image!"})
+    }
+
+    const {name, description, price} = req.body;
+
+    const image = "/" + req.file.path.replace("\\" ,"/");
+
+    const updatedProduct = new Product({
+      user: req.user.id,
+      name,
+      description,
+      price,
+      image
+    });
+    product = await Product.findByIdAndUpdate(req.params.productId, updatedProduct);
+    await product.save();
+    return res.status(200).json(product);
+    next();
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+    next(err);
+  }
+}
+
 
 // @route    DELETE /products/:productId
 // @desc     Delete a product

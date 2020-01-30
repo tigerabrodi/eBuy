@@ -1,0 +1,79 @@
+import React, {Fragment, useState, useEffect} from 'react';
+import {withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import {editProduct, getProduct} from '../../redux/product/product.actions';
+import Spinner from '../layout/Spinner';
+
+const CreateProduct = ({history, editProduct, match, product: {loading, product}}) => {
+    useEffect(() => {
+        getProduct(match.params.id);
+    }, [getProduct]);
+
+    
+    const [formData,
+        setFormData] = useState({name: product.name, description: product.description, price: product.price, image: ""});
+    const [showImage, setShowImage] = useState(false);
+    const [imageName, setImageName] = useState("");
+
+    const onChangeImage = e => {
+        setFormData({...formData, image: e.target.files[0]});
+        setShowImage(true);
+        setImageName(e.target.files[0].name);
+    }
+
+    const onChange = e => setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+    });
+
+        const onSubmit = e => {
+        e.preventDefault();
+        editProduct(formData, history, match.params.id);
+    }
+
+    const {name, description, price} = formData;
+
+
+
+    return (
+        <Fragment>
+            <div className="container">
+                <div className="row">
+                {loading && (
+                    <Spinner />
+                )}
+                    <div className="col text-info font-weight-bold m-2">
+                    *- All Fields Requried!
+                        <form onSubmit={e => onSubmit(e)}>
+                        <div className="form-group m-2">
+                        <label htmlFor="name">Name</label>
+                        <input type="text" placeholder="Enter Products Name" name="name" value={name} onChange={e => onChange(e)} className="form-control" required/>
+                        </div>
+                        <div className="form-group m-2">
+                        <label htmlFor="price">Price</label>
+                        <input type="number" name="price" placeholder="Enter Products Price" value={price} onChange={e => onChange(e)}  className="form-control" required/>
+                        </div>
+                        <div class="custom-file m-2">
+                        <input type="file"  onChange={e => onChangeImage(e)}  class="custom-file-input bg-info" required/>
+                        <label class="custom-file-label">{showImage ? imageName : "Upload Image"}</label>
+                      </div>
+                        <div className="form-group m-2">
+                        <label htmlFor="title">Description</label>
+                        <textarea name="description" onChange={e => onChange(e)} placeholder="Enter Products description" value={description} className="form-control" required/>
+                        </div>
+                        <input type="submit" value="Add Product" className="btn btn-block btn-info"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </Fragment>
+    );
+}
+
+const mapStateToProps = state => ({
+    product: state.product,
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, {editProduct})(withRouter(CreateProduct));
