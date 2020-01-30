@@ -4,16 +4,19 @@ import {connect} from "react-redux";
 import {editProduct, getProduct} from '../../redux/product/product.actions';
 import Spinner from '../layout/Spinner';
 
-const CreateProduct = ({history, editProduct, match, product: {loading, product}}) => {
+const EditProduct = ({history, editProduct, getProduct, match, product: {loading, product}}) => {
+
     useEffect(() => {
         getProduct(match.params.id);
-    }, [getProduct]);
+    }, []);
 
-    
     const [formData,
         setFormData] = useState({name: product.name, description: product.description, price: product.price, image: ""});
     const [showImage, setShowImage] = useState(false);
     const [imageName, setImageName] = useState("");
+
+
+
 
     const onChangeImage = e => {
         setFormData({...formData, image: e.target.files[0]});
@@ -29,11 +32,9 @@ const CreateProduct = ({history, editProduct, match, product: {loading, product}
         const onSubmit = e => {
         e.preventDefault();
         editProduct(formData, history, match.params.id);
-    }
+        }
 
     const {name, description, price} = formData;
-
-
 
     return (
         <Fragment>
@@ -76,4 +77,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, {editProduct})(withRouter(CreateProduct));
+export default withRouter(connect(mapStateToProps, {editProduct, getProduct})(EditProduct));

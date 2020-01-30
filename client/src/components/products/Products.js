@@ -8,9 +8,9 @@ import ProductItem from './ProductItem';
 const Products = ({getAllProducts, product: {products, totalProducts, loading}}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(6);
-
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
+    
     useEffect(() => {
         getAllProducts(currentPage);
     }, [currentPage, getAllProducts]);

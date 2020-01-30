@@ -27,7 +27,7 @@ const Dashboard = ({product: {products, loading, totalProducts}, loadUser, getUs
             </div>
         </div>
         <br />
-        {loading ||!products && (
+        {loading && (
             <Spinner />
         )}
         <div className="container">

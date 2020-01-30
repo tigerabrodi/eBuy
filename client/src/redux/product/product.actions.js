@@ -87,7 +87,7 @@ export const editProduct = (productData, history, id) => async dispatch => {
     formData.append("price", productData.price);
     formData.append("image", productData.image);
     try {
-        const res = await axios.post(`/products/edit/${id}`, formData);
+        const res = await axios.put(`/products/edit/${id}`, formData);
         dispatch({
             type: ProductActionTypes.UPDATE_PRODUCT,
             payload: res.data
