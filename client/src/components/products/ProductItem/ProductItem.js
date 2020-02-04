@@ -1,11 +1,13 @@
 import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteSingleProduct } from '../../redux/product/product.actions';
+import { deleteSingleProduct } from '../../../redux/product/product.actions';
+import { addProductToCart } from '../../../redux/cart/cart.actions';
 
 const ProductItem = ({
     deleteSingleProduct,
     auth,
+    addProductToCart,
     product: {
         _id,
         name,
@@ -27,9 +29,13 @@ const ProductItem = ({
                     {user._id === auth.user._id ? (
                         <Fragment>
                         <Link className="text-center btn btn-outline-danger mx-1" to={`/products/edit/${_id}`}><i className="fas fa-edit" /> </Link>
-                        <button className="btn btn-outline-dark" onClick={() => deleteSingleProduct(_id)}> <i className="fas fa-trash-alt" /> </button>
+                        <button className="btn btn-outline-dark" onClick={() => deleteSingleProduct(_id, null)}> <i className="fas fa-trash-alt" /> </button>
                         </Fragment>
-                    ) : null}
+                    ) : (
+                        <Fragment>
+                        <button onClick={() => addProductToCart(_id)} className="btn btn-outline-danger"> <i className="fas fa-cart-plus"/></button>
+                        </Fragment>
+                    )}
                 </div>
             </div>
         </Fragment>
@@ -40,4 +46,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, {deleteSingleProduct})(ProductItem);
+export default connect(mapStateToProps, {deleteSingleProduct, addProductToCart})(ProductItem);

@@ -1,20 +1,26 @@
 import React, {useEffect, Fragment, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Pagination from '../products/Pagination';
-import ProductItem from '../products/ProductItem';
+import Pagination from '../products/Pagination/Pagination';
+import ProductItem from '../products/ProductItem/ProductItem';
+import {loadUser} from "../../redux/auth/auth.actions";
 import { getUserProducts } from '../../redux/product/product.actions';
 import Spinner from '../layout/Spinner';
 
 const Dashboard = ({product: {products, loading, totalProducts}, loadUser, getUserProducts, auth: {user}}) => {
 
-
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(6);
+
+    useEffect(() => {
+        loadUser();
+        if (user) {
+            getUserProducts(user._id, currentPage)
+        }
+    }, [currentPage, user]);
+
     const paginate = pageNumber => setCurrentPage(pageNumber);
-        useEffect(() => {
-        getUserProducts(user._id, currentPage);
-    }, [currentPage, getUserProducts, user._id]);
+
 
     return (
         <Fragment>
@@ -53,4 +59,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, {getUserProducts})(Dashboard);
+export default connect(mapStateToProps, {getUserProducts, loadUser})(Dashboard);

@@ -41,9 +41,9 @@ const CreateProduct = ({history, addProduct}) => {
                         <label htmlFor="price">Price</label>
                         <input type="number" name="price" placeholder="Enter Products Price" value={price} onChange={e => onChange(e)}  className="form-control" required/>
                         </div>
-                        <div class="custom-file m-2">
-                        <input type="file"  onChange={e => onChangeImage(e)}  class="custom-file-input bg-info" required/>
-                        <label class="custom-file-label">{showImage ? imageName : "Upload Image"}</label>
+                        <div className="custom-file m-2">
+                        <input type="file"  onChange={e => onChangeImage(e)}  className="custom-file-input bg-info" required/>
+                        <label className="custom-file-label">{showImage ? imageName : "Upload Image"}</label>
                       </div>
                         <div className="form-group m-2">
                         <label htmlFor="title">Description</label>

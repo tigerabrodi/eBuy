@@ -3,20 +3,32 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {editProduct, getProduct} from '../../redux/product/product.actions';
 import Spinner from '../layout/Spinner';
+import { compose } from 'redux';
 
 const EditProduct = ({history, editProduct, getProduct, match, product: {loading, product}}) => {
 
-    useEffect(() => {
-        getProduct(match.params.id);
-    }, []);
-
     const [formData,
-        setFormData] = useState({name: product.name, description: product.description, price: product.price, image: ""});
+        setFormData] = useState({name: "", description: "", price: null, image: ""});
     const [showImage, setShowImage] = useState(false);
     const [imageName, setImageName] = useState("");
 
 
+    useEffect(() => {
+        getProduct(match.params.id);
+        setFormData({
+            name: loading || !product.name ? "" : product.name,
+            description: loading || !product.description ? "" : product.description,
+            price: loading || !product.price ? "" : product.price,
+            image: ""
+        })
 
+    }, [getProduct, loading]);
+
+
+
+
+
+    const {name, description, price} = formData;
 
     const onChangeImage = e => {
         setFormData({...formData, image: e.target.files[0]});
@@ -34,7 +46,7 @@ const EditProduct = ({history, editProduct, getProduct, match, product: {loading
         editProduct(formData, history, match.params.id);
         }
 
-    const {name, description, price} = formData;
+
 
     return (
         <Fragment>
@@ -54,15 +66,15 @@ const EditProduct = ({history, editProduct, getProduct, match, product: {loading
                         <label htmlFor="price">Price</label>
                         <input type="number" name="price" placeholder="Enter Products Price" value={price} onChange={e => onChange(e)}  className="form-control" required/>
                         </div>
-                        <div class="custom-file m-2">
-                        <input type="file"  onChange={e => onChangeImage(e)}  class="custom-file-input bg-info" required/>
-                        <label class="custom-file-label">{showImage ? imageName : "Upload Image"}</label>
+                        <div className="custom-file m-2">
+                        <input type="file"  onChange={e => onChangeImage(e)}  className="custom-file-input bg-info" required/>
+                        <label className="custom-file-label">{showImage ? imageName : "Upload Image"}</label>
                       </div>
                         <div className="form-group m-2">
                         <label htmlFor="title">Description</label>
                         <textarea name="description" onChange={e => onChange(e)} placeholder="Enter Products description" value={description} className="form-control" required/>
                         </div>
-                        <input type="submit" value="Add Product" className="btn btn-block btn-info"/>
+                        <input type="submit" value="Edit Product" className="btn btn-block btn-info"/>
                         </form>
                     </div>
                 </div>
@@ -77,4 +89,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default withRouter(connect(mapStateToProps, {editProduct, getProduct})(EditProduct));
+export default compose(withRouter, connect(mapStateToProps, {editProduct, getProduct}))(EditProduct);

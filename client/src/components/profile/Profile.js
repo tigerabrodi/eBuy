@@ -1,28 +1,28 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { getAllProducts } from '../../redux/product/product.actions';
+import { getUserProducts } from '../../redux/product/product.actions';
+import Pagination from '../products/Pagination/Pagination';
 import Spinner from '../layout/Spinner';
-import Pagination from './Pagination/Pagination';
-import ProductItem from './ProductItem/ProductItem';
+import ProductItem from '../products/ProductItem/ProductItem';
 
-const Products = ({getAllProducts, product: {products, totalProducts, loading}}) => {
+const Profile = ({product: {products, totalProducts, loading}, match, getUserProducts}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(6);
     const paginate = pageNumber => setCurrentPage(pageNumber);
 
-    
     useEffect(() => {
-        getAllProducts(currentPage);
-    }, [currentPage, getAllProducts]);
+        getUserProducts(match.params.id, currentPage);
+    }, [currentPage, products]);
 
-    return loading ? <Spinner /> : (
+    return loading ?
+        <Spinner /> : (
         <Fragment>
         <div className="container">
         <div className="row">
         <div className="col text-center">
         <h1 className="text-warning text-monospace">Products</h1>
         <p className="lead text-success font-weight-bold">
-         Find Your Item Today
+         Find Items From This Person!
         </p>
         </div>
         </div>
@@ -43,12 +43,11 @@ const Products = ({getAllProducts, product: {products, totalProducts, loading}})
         </div>
         </div>
         </Fragment>
-    );
-} 
-
+        )
+}
 
 const mapStateToProps = state => ({
     product: state.product
 });
 
-export default connect(mapStateToProps, {getAllProducts})(Products);
+export default connect(mapStateToProps, {getUserProducts})(Profile);

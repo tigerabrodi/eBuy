@@ -52,7 +52,8 @@ const Login = ({login, isAuthenticated}) => {
                                             value={password}
                                             minLength='6'
                                             className="form-control form-control-lg"
-                                            placeholder="Password"/>
+                                            placeholder="Password"
+                                            required/>
                                     </div>
                                     <input type="submit" value="Login" className="btn btn-primary btn-block"/>
                                     <Link to="/register">

@@ -41,20 +41,23 @@ export const getAllProducts = page => async dispatch => {
     } catch (err) {
         dispatch({
             type: ProductActionTypes.PRODUCT_ERROR,
-            payload: err
+            payload: {msg: err.response.statusText, status: err.response.status}
             })
     }
 }
 
 // Delete a product
-export const deleteSingleProduct = id => async dispatch => {
+export const deleteSingleProduct = (id, history) => async dispatch => {
     try {
         await axios.delete(`/products/${id}`);
         dispatch({
             type: ProductActionTypes.DELETE_PRODUCT,
             payload: id
         });
-        dispatch(setAlert("Product deleted successfully", "success"))
+        dispatch(setAlert("Product deleted successfully", "success"));
+        if (history) {
+            return history.push("/dashboard")
+        }
     } catch (err) {
         dispatch({
             type: ProductActionTypes.PRODUCT_ERROR,

@@ -15,6 +15,10 @@ import Dashboard from './components/dashboard/Dashboard';
 import CreateProduct from './components/product-forms/CreateProduct';
 import Products from './components/products/Products';
 import EditProduct from './components/product-forms/EditProduct';
+import Product from './components/product/Product';
+import { getCartProducts } from './redux/cart/cart.actions';
+import Profile from './components/profile/Profile';
+import Cart from './components/cart/Cart';
 
 
 if (localStorage.token) {
@@ -25,6 +29,7 @@ if (localStorage.token) {
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
+    store.dispatch(getCartProducts());
   }, []);
   
   return (  
@@ -41,6 +46,9 @@ const App = () => {
     <PrivateRoute exact path="/add-product" component={CreateProduct} />
     <PrivateRoute exact path="/products" component={Products} />
     <PrivateRoute exact path="/products/edit/:id" component={EditProduct} />
+    <PrivateRoute exact path="/products/:id" component={Product} />
+    <PrivateRoute exact path="/user/products/:id" component={Profile} />
+    <PrivateRoute exact path="/cart" component={Cart} />
     </Switch>
     </Fragment>
     </Router>

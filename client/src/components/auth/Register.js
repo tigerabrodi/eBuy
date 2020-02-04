@@ -46,7 +46,8 @@ const Register = ({setAlert, register, isAuthenticated}) => {
                                             value={name}
                                             name='name'
                                             className="form-control form-control-lg"
-                                            placeholder="Name"/>
+                                            placeholder="Name"
+                                            required/>
                                     </div>
                                     <div className="form-group">
                                         <input
@@ -55,7 +56,8 @@ const Register = ({setAlert, register, isAuthenticated}) => {
                                             name='email'
                                             value={email}
                                             className="form-control form-control-lg"
-                                            placeholder="Email"/>
+                                            placeholder="Email"
+                                            required/>
                                     </div>
                                     <div className="form-group">
                                         <input
@@ -64,7 +66,8 @@ const Register = ({setAlert, register, isAuthenticated}) => {
                                             name='password'
                                             value={password}
                                             className="form-control form-control-lg"
-                                            placeholder="Password"/>
+                                            placeholder="Password"
+                                            required/>
                                     </div>
                                     <div className="form-group">
                                         <input
@@ -73,7 +76,8 @@ const Register = ({setAlert, register, isAuthenticated}) => {
                                             type="password"
                                             name='password2'
                                             className="form-control form-control-lg"
-                                            placeholder="Confirm Password"/>
+                                            placeholder="Confirm Password"
+                                            required/>
                                     </div>
                                     <input type="submit" value="Register" className="btn btn-outline-warning btn-block"/>
                                     <Link to="/login">

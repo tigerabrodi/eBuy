@@ -2,6 +2,7 @@ import axios from "axios";
 import {setAlert} from "../alert/alert.actions"
 import {AuthActionTypes} from "./auth.types"
 import setAuthToken from "../../utils/setAuthToken"
+import { getCartProducts } from "../cart/cart.actions";
 
 // Load User
 export const loadUser = () => async dispatch => {
@@ -40,8 +41,8 @@ export const register = ({ name, email, password }) => async dispatch => {
         type: AuthActionTypes.REGISTER_SUCCESS,
         payload: res.data
       });
-  
       dispatch(loadUser());
+      dispatch(getCartProducts());
     } catch (err) {
       const errors = err.response.data.errors;
   
@@ -72,8 +73,8 @@ export const login = (email, password) => async dispatch => {
         type: AuthActionTypes.LOGIN_SUCCESS,
         payload: res.data
       });
-  
       dispatch(loadUser());
+      dispatch(getCartProducts());
     } catch (err) {
       const errors = err.response.data.errors;
       if (errors) {

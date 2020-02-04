@@ -1,6 +1,7 @@
 const {validationResult} = require("express-validator");
 const User = require("../models/User");
 const Product = require("../models/Product");
+const Question = require("../models/Question");
 
 
 // @route    POST /products
@@ -13,7 +14,6 @@ exports.createProduct = async (req, res, next) => {
     }
 
     try {
-      console.log(req.body);
       const {name, description, price} = req.body;
 
       if (!req.file) {
@@ -50,7 +50,7 @@ exports.getAllProducts = async (req, res, next) => {
     const totalProducts = await Product.find().countDocuments();
     totalItems = totalProducts;
     const products = await Product.find().sort({date: -1})
-    .populate("user")
+    .populate("user").select("-password")
     .skip((currentPage - 1) * perPage)
     .limit(perPage);
     res.status(200).json({
@@ -72,7 +72,7 @@ exports.getAllProducts = async (req, res, next) => {
 // @access   Private
 exports.getUserProducts = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.params.userId).select("-password");
     if (!user) {
       return res.status(404).json({msg: "No User with this ID was found"})
     }
@@ -82,7 +82,7 @@ exports.getUserProducts = async (req, res, next) => {
     const totalProducts = await Product.find({user: user._id}).countDocuments();
     totalItems = totalProducts;
     const products = await Product.find({user: user._id}).sort({date: -1})
-    .populate("user")
+    .populate("user").select("-password")
     .skip((currentPage - 1) * perPage)
     .limit(perPage);
     res.status(200).json({
@@ -103,7 +103,7 @@ exports.getUserProducts = async (req, res, next) => {
 // @access   Private
 exports.getProduct = async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.productId);
+    const product = await Product.findById(req.params.productId).populate("user").select("-password");
     if (!product) {
       return res.status(404).json({msg: "Could not find product"});
     }
@@ -144,13 +144,12 @@ exports.editProduct = async (req, res, next) => {
 
     const image = "/" + req.file.path.replace("\\" ,"/");
 
-    const updatedProduct = new Product({
-      user: req.user.id,
-      name,
-      description,
-      price,
-      image
-    });
+    let updatedProduct = {};
+    updatedProduct.name = name;
+    updatedProduct.description = description;
+    updatedProduct.price = price;
+    updatedProduct.image = image;
+
     product = await Product.findByIdAndUpdate(req.params.productId, updatedProduct);
     await product.save();
     return res.status(200).json(product);
@@ -170,11 +169,14 @@ exports.deleteProduct = async (req, res, next) => {
   try {
       const product = await Product.findById(req.params.productId);
       if (!product) {
-        return res.status(404).json({msg: "Product was not found"});
+        return res.status(404).json({msg: "Product do not exist"});
       }
       if (product.user.toString() !== req.user.id) {
         return res.status(401).json({msg: "You are not authorized"});
       }
+      await Question.deleteMany({product: product._id});
+
+      
 
       await product.remove();
       res.status(200).json({msg: "Product Deleted"});
