@@ -1,6 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://tiger:.Miraya02@cluster0-4mm2n.mongodb.net/eBuy?retryWrites=true&w=majority",
-    "jwtSecret": "mgiengpognio0ren40gponm",
-    "sendGridApi": "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",
-    "StripeApiKey": "sk_test_Dw91H7WqhpCh0bQDzneSPS4g"
-}
