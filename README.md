@@ -38,3 +38,17 @@ Add keys and You will be abled to deploy this on heroku
 ## License
 
 This project is licensed under the MIT License 
+
+# What I Learned
+- Implementing a shopping cart for each user (Back-End)
+- Integrating Stripe on Front-End
+- Creating relationships using Mongoose's virtuals
+- Models with Mongoose
+- Working with MongoDB
+- Connecting Server and Client to work together
+- Authentication at the Front End
+- Working with Redux
+- Using Multer for image upload
+- Deploying on Heroku
+- Working with express
+- Splitting the code into Routes and Controllers, aswell as mounting them in app.js
